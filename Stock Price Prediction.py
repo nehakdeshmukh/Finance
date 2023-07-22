@@ -34,9 +34,11 @@ fig.update_layout(title="Stock Price",xaxis_title="time in days",  yaxis_title="
 fig.show()
 
 
+fig = go.Figure()
 
-
-
+fig.add_trace(go.Scatter(y= data[data.symbol == 'AAPL'].volume.values,name='volume'),)
+fig.update_layout(title="stock volume",xaxis_title="time in days",  yaxis_title="volume")
+fig.show()
 
 
 

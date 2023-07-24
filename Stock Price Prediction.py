@@ -107,12 +107,13 @@ print('y_test.shape = ',y_test.shape)
 
 # AAPL stock 
 fig = go.Figure()
-fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].open.values,name='open'),)
-fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].close.values,name='close'))
-fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].low.values,name='low'))
-fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].high.values,name='high'))
+fig.add_trace(go.Scatter(y= df_stock_norm.open.values,name='open'),)
+fig.add_trace(go.Scatter(y= df_stock_norm.close.values,name='close'))
+fig.add_trace(go.Scatter(y= df_stock_norm.low.values,name='low'))
+fig.add_trace(go.Scatter(y= df_stock_norm.high.values,name='high'))
 fig.update_layout(title="Stock Price",xaxis_title="time in days",  yaxis_title="Price")
 fig.show()
+
 
 
 

@@ -56,6 +56,11 @@ df_stock.drop(['symbol'],1,inplace=True)
 df_stock.drop(['volume'],1,inplace=True)
 
 
+# normalize stock
+df_stock_norm = df_stock.copy()
+df_stock_norm = normalize_data(df_stock_norm)
+
+
 
 
 

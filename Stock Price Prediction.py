@@ -115,5 +115,25 @@ fig.update_layout(title="Stock Price",xaxis_title="time in days",  yaxis_title="
 fig.show()
 
 
+## Basic Cell RNN in tensorflow
+
+index_in_epoch = 0;
+perm_array  = np.arange(x_train.shape[0])
+np.random.shuffle(perm_array)
+
+# function to get the next batch
+def get_next_batch(batch_size):
+    global index_in_epoch, x_train, perm_array   
+    start = index_in_epoch
+    index_in_epoch += batch_size
+    
+    if index_in_epoch > x_train.shape[0]:
+        np.random.shuffle(perm_array) # shuffle permutation array
+        start = 0 # start next epoch
+        index_in_epoch = batch_size
+        
+    end = index_in_epoch
+    return x_train[perm_array[start:end]], y_train[perm_array[start:end]]
+
 
 

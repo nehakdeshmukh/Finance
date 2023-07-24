@@ -90,7 +90,17 @@ def split_data(stock, seq_len,valid_set_size_percentage,test_set_size_percentage
     return [x_train, y_train, x_valid, y_valid, x_test, y_test]
 
 
+# create train, test data
+seq_len = 20 # choose sequence length
 
+
+x_train, y_train, x_valid, y_valid, x_test, y_test = split_data(df_stock_norm, seq_len,valid_set_size_percentage,test_set_size_percentage)
+print('x_train.shape = ',x_train.shape)
+print('y_train.shape = ', y_train.shape)
+print('x_valid.shape = ',x_valid.shape)
+print('y_valid.shape = ', y_valid.shape)
+print('x_test.shape = ', x_test.shape)
+print('y_test.shape = ',y_test.shape)
 
 
 

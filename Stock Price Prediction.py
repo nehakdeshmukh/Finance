@@ -66,7 +66,8 @@ test_set_size_percentage = 10
 
 # function to create train, validation, test data given stock data and sequence length
 def split_data(stock, seq_len,valid_set_size_percentage,test_set_size_percentage):
-    data_raw = stock.as_matrix() # convert to numpy array
+    #data_raw = stock.as_matrix() # convert to numpy array
+    data_raw = np.array(df_stock_norm)
     data = []
     
     # create all possible sequences of length seq_len
@@ -95,6 +96,7 @@ seq_len = 20 # choose sequence length
 
 
 x_train, y_train, x_valid, y_valid, x_test, y_test = split_data(df_stock_norm, seq_len,valid_set_size_percentage,test_set_size_percentage)
+
 print('x_train.shape = ',x_train.shape)
 print('y_train.shape = ', y_train.shape)
 print('x_valid.shape = ',x_valid.shape)
@@ -103,7 +105,14 @@ print('x_test.shape = ', x_test.shape)
 print('y_test.shape = ',y_test.shape)
 
 
-
+# AAPL stock 
+fig = go.Figure()
+fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].open.values,name='open'),)
+fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].close.values,name='close'))
+fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].low.values,name='low'))
+fig.add_trace(go.Scatter(y= df_stock_norm[df_stock_norm.symbol == 'AAPL'].high.values,name='high'))
+fig.update_layout(title="Stock Price",xaxis_title="time in days",  yaxis_title="Price")
+fig.show()
 
 
 

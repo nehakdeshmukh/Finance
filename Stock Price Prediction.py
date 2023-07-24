@@ -60,8 +60,34 @@ df_stock.drop(['volume'],1,inplace=True)
 df_stock_norm = df_stock.copy()
 df_stock_norm = normalize_data(df_stock_norm)
 
+# split data in 80%/10%/10% train/validation/test sets
+valid_set_size_percentage = 10 
+test_set_size_percentage = 10 
 
-
+# function to create train, validation, test data given stock data and sequence length
+def split_data(stock, seq_len,valid_set_size_percentage,test_set_size_percentage):
+    data_raw = stock.as_matrix() # convert to numpy array
+    data = []
+    
+    # create all possible sequences of length seq_len
+    for index in range(len(data_raw) - seq_len): 
+        data.append(data_raw[index: index + seq_len])
+    
+    data = np.array(data);
+    valid_set_size = int(np.round(valid_set_size_percentage/100*data.shape[0]));  
+    test_set_size = int(np.round(test_set_size_percentage/100*data.shape[0]));
+    train_set_size = data.shape[0] - (valid_set_size + test_set_size);
+    
+    x_train = data[:train_set_size,:-1,:]
+    y_train = data[:train_set_size,-1,:]
+    
+    x_valid = data[train_set_size:train_set_size+valid_set_size,:-1,:]
+    y_valid = data[train_set_size:train_set_size+valid_set_size,-1,:]
+    
+    x_test = data[train_set_size+valid_set_size:,:-1,:]
+    y_test = data[train_set_size+valid_set_size:,-1,:]
+    
+    return [x_train, y_train, x_valid, y_valid, x_test, y_test]
 
 
 

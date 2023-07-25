@@ -10,7 +10,8 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import sklearn.preprocessing
-import tensorflow as tf
+from tensorflow.python.framework import ops
+import tensorflow.compat.v1 as tf
 
 
 # import all stock prices 
@@ -152,11 +153,20 @@ train_set_size = x_train.shape[0]
 test_set_size = x_test.shape[0]
 
 
-tf.reset_default_graph()
+
+
+# tf.reset_default_graph()
+ops.reset_default_graph()
 
 X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
 y = tf.placeholder(tf.float32, [None, n_outputs])
 
+# tf.compat.v1.nn.rnn_cell.BasicRNNCell(
 # use Basic RNN Cell
-layers = [tf.contrib.rnn.BasicRNNCell(num_units=n_neurons, activation=tf.nn.elu)
+layers = [tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons, activation=tf.nn.elu)
           for layer in range(n_layers)]
+
+# tf.compat.v1.nn.rnn_cell.MultiRNNCell(
+multi_layer_cell = tf.nn.rnn_cell.MultiRNNCell(layers)
+rnn_outputs, states = tf.nn.dynamic_rnn(multi_layer_cell, X, dtype=tf.float32)
+

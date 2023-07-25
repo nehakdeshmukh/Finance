@@ -10,6 +10,8 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import sklearn.preprocessing
+import tensorflow as tf
+
 
 # import all stock prices 
 data = pd.read_csv(r"C:\Neha\kaggle Projects\Git hub\Finance\Dataset\prices-split-adjusted.csv", index_col = 0)
@@ -137,3 +139,24 @@ def get_next_batch(batch_size):
 
 
 
+# parameters
+n_steps = seq_len-1 
+n_inputs = 4 
+n_neurons = 200 
+n_outputs = 4
+n_layers = 2
+learning_rate = 0.001
+batch_size = 50
+n_epochs = 100 
+train_set_size = x_train.shape[0]
+test_set_size = x_test.shape[0]
+
+
+tf.reset_default_graph()
+
+X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+y = tf.placeholder(tf.float32, [None, n_outputs])
+
+# use Basic RNN Cell
+layers = [tf.contrib.rnn.BasicRNNCell(num_units=n_neurons, activation=tf.nn.elu)
+          for layer in range(n_layers)]

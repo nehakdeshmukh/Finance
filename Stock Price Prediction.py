@@ -170,3 +170,12 @@ layers = [tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons, activation=tf.nn.elu)
 multi_layer_cell = tf.nn.rnn_cell.MultiRNNCell(layers)
 rnn_outputs, states = tf.nn.dynamic_rnn(multi_layer_cell, X, dtype=tf.float32)
 
+stacked_rnn_outputs = tf.reshape(rnn_outputs, [-1, n_neurons]) 
+stacked_outputs = tf.layers.dense(stacked_rnn_outputs, n_outputs)
+outputs = tf.reshape(stacked_outputs, [-1, n_steps, n_outputs])
+outputs = outputs[:,n_steps-1,:] # keep only last output of sequence
+                                              
+loss = tf.reduce_mean(tf.square(outputs - y)) # loss function = mean squared error 
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate) 
+training_op = optimizer.minimize(loss)
+

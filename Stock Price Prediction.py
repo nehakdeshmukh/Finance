@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 import sklearn.preprocessing
 from tensorflow.python.framework import ops
 import tensorflow.compat.v1 as tf
+import matplotlib.pyplot as plt 
 
 
 # import all stock prices 
@@ -195,3 +196,33 @@ with tf.Session() as sess:
     y_valid_pred = sess.run(outputs, feed_dict={X: x_valid})
     y_test_pred = sess.run(outputs, feed_dict={X: x_test})
     
+
+ft = 0 # 0 = open, 1 = close, 2 = highest, 3 = lowest
+
+## show predictions
+plt.figure(figsize=(15, 5));
+# plt.subplot(1,2,1);
+
+plt.plot(np.arange(y_train.shape[0]), y_train[:,ft], color='blue', label='train target')
+
+plt.plot(np.arange(y_train.shape[0], y_train.shape[0]+y_valid.shape[0]), y_valid[:,ft],
+         color='gray', label='valid target')
+
+plt.plot(np.arange(y_train.shape[0]+y_valid.shape[0],
+                   y_train.shape[0]+y_test.shape[0]+y_test.shape[0]),
+         y_test[:,ft], color='black', label='test target')
+
+plt.plot(np.arange(y_train_pred.shape[0]),y_train_pred[:,ft], color='red',
+         label='train prediction')
+
+plt.plot(np.arange(y_train_pred.shape[0], y_train_pred.shape[0]+y_valid_pred.shape[0]),
+         y_valid_pred[:,ft], color='orange', label='valid prediction')
+
+plt.plot(np.arange(y_train_pred.shape[0]+y_valid_pred.shape[0],
+                   y_train_pred.shape[0]+y_valid_pred.shape[0]+y_test_pred.shape[0]),
+         y_test_pred[:,ft], color='green', label='test prediction')
+
+plt.title('past and future stock prices')
+plt.xlabel('time [days]')
+plt.ylabel('normalized price')
+plt.legend(loc='best');

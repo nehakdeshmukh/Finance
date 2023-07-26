@@ -179,3 +179,19 @@ loss = tf.reduce_mean(tf.square(outputs - y)) # loss function = mean squared err
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate) 
 training_op = optimizer.minimize(loss)
 
+# run graph
+with tf.Session() as sess: 
+    sess.run(tf.global_variables_initializer())
+    for iteration in range(int(n_epochs*train_set_size/batch_size)):
+        x_batch, y_batch = get_next_batch(batch_size) # fetch the next training batch 
+        sess.run(training_op, feed_dict={X: x_batch, y: y_batch}) 
+        if iteration % int(5*train_set_size/batch_size) == 0:
+            mse_train = loss.eval(feed_dict={X: x_train, y: y_train}) 
+            mse_valid = loss.eval(feed_dict={X: x_valid, y: y_valid}) 
+            print('%.2f epochs: MSE train/valid = %.6f/%.6f'%(
+                iteration*batch_size/train_set_size, mse_train, mse_valid))
+
+    y_train_pred = sess.run(outputs, feed_dict={X: x_train})
+    y_valid_pred = sess.run(outputs, feed_dict={X: x_valid})
+    y_test_pred = sess.run(outputs, feed_dict={X: x_test})
+    

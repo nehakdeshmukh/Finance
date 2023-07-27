@@ -249,3 +249,6 @@ corr_price_development_test = np.sum(np.equal(np.sign(y_test[:,1]-y_test[:,0]),
 
 print('correct sign prediction for close - open price for train/valid/test: %.2f/%.2f/%.2f'%(
     corr_price_development_train, corr_price_development_valid, corr_price_development_test))
+
+
+

@@ -42,3 +42,12 @@ y = np.array(label)
 
 
 X_train,X_test,y_train,y_test = train_test_split(X, y, test_size=test_size,random_state=3)
+
+lr = LinearRegression()
+lr.fit(X_train,y_train)
+
+score = lr.score(X_test,y_test)
+score
+
+predict = lr.predict(X_lately)
+predict

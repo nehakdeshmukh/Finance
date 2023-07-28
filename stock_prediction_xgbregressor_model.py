@@ -48,3 +48,22 @@ df_fundamental = df_fundamental[df_fundamental["Ticker Symbol"].isin(top_tech_sy
 
 print(df_technical)
 print(df_fundamental)
+
+# Datetime Features
+print("Before Adding Datetime Features:", df_technical.shape)
+
+col = "date"
+prefix = col + "_"
+df_technical[col] = pd.to_datetime(df_technical[col])
+df_technical[prefix + 'year'] = df_technical[col].dt.year
+df_technical[prefix + 'month'] = df_technical[col].dt.month
+df_technical[prefix + 'day'] = df_technical[col].dt.day
+df_technical[prefix + 'weekofyear'] = df_technical[col].dt.weekofyear
+df_technical[prefix + 'dayofweek'] = df_technical[col].dt.dayofweek
+df_technical[prefix + 'quarter'] = df_technical[col].dt.quarter
+df_technical[prefix + 'is_month_start'] = df_technical[col].dt.is_month_start.astype(int)
+df_technical[prefix + 'is_month_end'] = df_technical[col].dt.is_month_end.astype(int)
+
+print(" After Adding Datetime Features:", df_technical.shape)
+
+df_technical

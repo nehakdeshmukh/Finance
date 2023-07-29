@@ -75,8 +75,19 @@ ohlcv = ["open", "high", "low", "close", "volume"]
 for col in ohlcv:
     lags = np.arange(65, 101, 1)
     for lag in lags:
+        
         df_technical["{}_lag_{}".format(col, lag)] = df_technical.groupby("symbol")[col].transform(lambda x: x.shift(lag))
 
 print(" After Adding Lag Features:", df_technical.shape)
+
+df_technical
+
+# Drop Features
+print("Before Drop Features:", df_technical.shape)
+
+drop_features = ["open", "high", "low", "volume"]
+df_technical = df_technical.drop(drop_features, axis=1)
+
+print(" After Drop Features:", df_technical.shape)
 
 df_technical

@@ -67,3 +67,16 @@ df_technical[prefix + 'is_month_end'] = df_technical[col].dt.is_month_end.astype
 print(" After Adding Datetime Features:", df_technical.shape)
 
 df_technical
+
+# Lag Features
+print("Before Adding Lag Features:", df_technical.shape)
+
+ohlcv = ["open", "high", "low", "close", "volume"]
+for col in ohlcv:
+    lags = np.arange(65, 101, 1)
+    for lag in lags:
+        df_technical["{}_lag_{}".format(col, lag)] = df_technical.groupby("symbol")[col].transform(lambda x: x.shift(lag))
+
+print(" After Adding Lag Features:", df_technical.shape)
+
+df_technical

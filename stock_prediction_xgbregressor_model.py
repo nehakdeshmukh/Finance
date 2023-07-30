@@ -104,5 +104,14 @@ print(" After Adding Datetime Features:", df_fundamental.shape)
 
 df_fundamental
 
+# Drop Features
+print("Before Drop Features:", df_fundamental.shape)
 
+# drop_features = ["Period Ending", "Cash Ratio", "Current Ratio", "Quick Ratio", "For Year", "Earnings Per Share", "Estimated Shares Outstanding"]
+drop_features = ["Period Ending", "For Year"]
+df_fundamental = df_fundamental.drop(drop_features, axis=1)
+
+print(" After Drop Features:", df_fundamental.shape)
+
+df_fundamental
 

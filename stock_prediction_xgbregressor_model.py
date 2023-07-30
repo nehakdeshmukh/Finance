@@ -115,3 +115,7 @@ print(" After Drop Features:", df_fundamental.shape)
 
 df_fundamental
 
+# Filtering Date and Symbol in Technical Data
+df_technical = df_technical[(df_technical["date"]>="2014-01-01")&(df_technical["date"]<="2016-12-31")].reset_index(drop=True)
+# df_technical = df_technical[(df_technical["date"]>="2010-01-01")&(df_technical["date"]<="2016-12-31")].reset_index(drop=True)
+df_technical

@@ -91,3 +91,18 @@ df_technical = df_technical.drop(drop_features, axis=1)
 print(" After Drop Features:", df_technical.shape)
 
 df_technical
+
+# Datetime Features Fundamental features
+print("Before Adding Datetime Features:", df_fundamental.shape)
+
+df_fundamental["Period Ending"] = pd.to_datetime(df_fundamental["Period Ending"])
+df_fundamental["First_Date_Tech"] = df_fundamental["Period Ending"] + pd.Timedelta(days=1)
+df_fundamental['Last_Date_Tech'] = df_fundamental.groupby("Ticker Symbol")["Period Ending"].shift(-1)
+df_fundamental['Last_Date_Tech'] = df_fundamental['Last_Date_Tech'].fillna(df_fundamental['Period Ending'] + pd.offsets.DateOffset(years=1))
+
+print(" After Adding Datetime Features:", df_fundamental.shape)
+
+df_fundamental
+
+
+

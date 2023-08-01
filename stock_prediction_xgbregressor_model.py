@@ -156,3 +156,19 @@ df_actual_predicted_test = pd.DataFrame({
 })
 
 df_actual_predicted = df_actual_predicted.append(df_actual_predicted_test, ignore_index=True)
+
+
+# Categorical Encoding
+categorical_features = ["symbol"]
+
+df_category = pd.get_dummies(data=df_train[categorical_features], drop_first=True)
+df_train = pd.concat([df_train, df_category], axis=1)
+df_train = df_train.drop(categorical_features, axis=1)
+
+df_category = pd.get_dummies(data=df_test[categorical_features], drop_first=True)
+df_test = pd.concat([df_test, df_category], axis=1)
+df_test = df_test.drop(categorical_features, axis=1)
+
+# Drop Date Features
+df_train = df_train.drop("date", axis=1)
+df_test = df_test.drop("date", axis=1)

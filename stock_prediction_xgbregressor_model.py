@@ -119,3 +119,13 @@ df_fundamental
 df_technical = df_technical[(df_technical["date"]>="2014-01-01")&(df_technical["date"]<="2016-12-31")].reset_index(drop=True)
 # df_technical = df_technical[(df_technical["date"]>="2010-01-01")&(df_technical["date"]<="2016-12-31")].reset_index(drop=True)
 df_technical
+
+# Merging Technical and Fundamental Data
+df_tech_fund = df_technical.merge(df_fundamental, left_on="symbol", right_on="Ticker Symbol")
+df_tech_fund = df_tech_fund[(df_tech_fund["date"]>=df_tech_fund["First_Date_Tech"]) & (df_tech_fund["date"]<=df_tech_fund["Last_Date_Tech"])].reset_index(drop=True)
+
+# df_tech_fund = df_technical.copy()
+df_tech_fund
+
+
+

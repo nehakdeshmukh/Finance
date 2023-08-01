@@ -128,4 +128,14 @@ df_tech_fund = df_tech_fund[(df_tech_fund["date"]>=df_tech_fund["First_Date_Tech
 df_tech_fund
 
 
+# Drop Features
+print("Before Drop Features:", df_tech_fund.shape)
+
+drop_features = ["Ticker Symbol", "First_Date_Tech", "Last_Date_Tech"]
+df_tech_fund = df_tech_fund.drop(drop_features, axis=1)
+
+print(" After Drop Features:", df_tech_fund.shape)
+
+df_tech_fund
+
 

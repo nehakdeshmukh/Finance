@@ -138,4 +138,21 @@ print(" After Drop Features:", df_tech_fund.shape)
 
 df_tech_fund
 
+# Data Splitting (Train: 2014-Q3 2016, Test: Q4 2016)
+df_train = df_tech_fund[df_tech_fund["date"] < "2016-10-01"].reset_index(drop=True)
+df_test = df_tech_fund[df_tech_fund["date"] >= "2016-10-01"].reset_index(drop=True)
 
+# Create Actual Predicted DataFrame
+df_actual_predicted = pd.DataFrame({
+    "date": df_train["date"],
+    "symbol": df_train["symbol"],
+    "actual": df_train["close"], 
+})
+
+df_actual_predicted_test = pd.DataFrame({
+    "date": df_test["date"],
+    "symbol": df_test["symbol"],
+    "actual": df_test["close"], 
+})
+
+df_actual_predicted = df_actual_predicted.append(df_actual_predicted_test, ignore_index=True)

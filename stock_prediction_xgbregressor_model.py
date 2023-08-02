@@ -190,5 +190,35 @@ print("y_train:", y_train.shape)
 print(" X_test:", X_test.shape)
 print(" y_test:", y_test.shape)
 
+xgb_tuning = False
 
 
+def objective_xgb(trial): 
+    # Parameters
+    params = {
+        'max_depth': trial.suggest_int('max_depth', 1, 25),
+        'learning_rate': trial.suggest_float('learning_rate', 0.01, 1.0),
+        'n_estimators': trial.suggest_int('n_estimators', 50, 1000),
+        'min_child_weight': trial.suggest_int('min_child_weight', 1, 100),
+        'gamma': trial.suggest_float('gamma', 0.01, 1.0),
+        'subsample': trial.suggest_float('subsample', 0.01, 1.0),
+        'colsample_bytree': trial.suggest_float('colsample_bytree', 0.01, 1.0),
+        'reg_alpha': trial.suggest_float('reg_alpha', 0.01, 1.0),
+        'reg_lambda': trial.suggest_float('reg_lambda', 0.01, 1.0),
+        'random_state': 2023
+    }
+    
+    # Fit the Model
+    optuna_model = XGBRegressor(**params)
+    optuna_model.fit(X_train, y_train)
+    
+    # Make Predictions
+    y_pred = optuna_model.predict(X_test)
+    
+    # Evaluate Predictions
+    mse = mean_squared_error(y_test, y_pred)
+    return mse
+
+if(xgb_tuning):
+    xgb_study = optuna.create_study(direction='minimize', sampler=optuna.samplers.TPESampler(seed=2023))
+    xgb_study.optimize(objective_xgb, n_trials=50)

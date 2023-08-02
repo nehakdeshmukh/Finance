@@ -7,6 +7,10 @@ Created on Fri Jul 28 09:12:12 2023
 
 import numpy as np
 import pandas as pd
+from xgboost import XGBRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import optuna
+
 
 df_technical = pd.read_csv(
     r"C:\Neha\kaggle Projects\Git hub\Finance\Dataset\prices-split-adjusted.csv")

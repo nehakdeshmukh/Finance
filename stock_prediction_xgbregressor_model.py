@@ -172,3 +172,23 @@ df_test = df_test.drop(categorical_features, axis=1)
 # Drop Date Features
 df_train = df_train.drop("date", axis=1)
 df_test = df_test.drop("date", axis=1)
+
+
+print("Train Dataset")
+print(df_train)
+
+print("Test Dataset")
+print(df_test)
+
+X_train = df_train.drop("close", axis=1)
+y_train = df_train["close"]
+X_test = df_test.drop("close", axis=1)
+y_test = df_test["close"]
+
+print("X_train:", X_train.shape)
+print("y_train:", y_train.shape)
+print(" X_test:", X_test.shape)
+print(" y_test:", y_test.shape)
+
+
+

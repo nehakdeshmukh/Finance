@@ -263,3 +263,20 @@ y_pred_train = best_model.predict(X_train)
 n = X_train.shape[0]
 p = X_train.shape[1]
 
+
+def adjusted_r2_score(y_test, y_pred, n, p):
+    score = r2_score(y_test, y_pred)
+    return 1 - (1 - score) * (n - 1) / (n - p - 1)
+
+mse = mean_squared_error(y_train, y_pred_train)
+rmse = mean_squared_error(y_train, y_pred_train, squared=False)
+mae = mean_absolute_error(y_train, y_pred_train)
+r2 = r2_score(y_train, y_pred_train)
+adj_r2 = adjusted_r2_score(y_train, y_pred_train, n, p)
+
+print("Metric Scores for Training")
+print("MSE    :", mse)
+print("RMSE   :", rmse)
+print("MAE    :", mae)
+print("R2     :", r2)
+print("Adj R2 :", adj_r2)

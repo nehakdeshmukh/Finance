@@ -253,3 +253,13 @@ else:
         "reg_lambda": 0.4772478981932024,
     }
     print(best_params)
+    
+best_model = XGBRegressor(random_state=2023)
+best_model.set_params(**best_params)
+
+best_model.fit(X_train, y_train)
+
+y_pred_train = best_model.predict(X_train)
+n = X_train.shape[0]
+p = X_train.shape[1]
+

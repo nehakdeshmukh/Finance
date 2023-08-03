@@ -226,3 +226,30 @@ def objective_xgb(trial):
 if(xgb_tuning):
     xgb_study = optuna.create_study(direction='minimize', sampler=optuna.samplers.TPESampler(seed=2023))
     xgb_study.optimize(objective_xgb, n_trials=50)
+
+
+if(xgb_tuning):
+    print('Number of finished trials: {}'.format(len(xgb_study.trials)))
+    print('Best trial:')
+    best_xgb = xgb_study.best_trial
+
+    print('  Value: {}'.format(best_xgb.value))
+    print('  Params: ')
+
+    for key, value in best_xgb.params.items():
+        print('    {}: {}'.format(key, value))
+        
+    best_params = best_xgb.params
+else:
+    best_params = {
+        "max_depth": 20,
+        "learning_rate": 0.2067525580637779,
+        "n_estimators": 989,
+        "min_child_weight": 84,
+        "gamma": 0.311037429261164,
+        "subsample": 0.6539237831027682,
+        "colsample_bytree": 0.45604560131724914,
+        "reg_alpha": 0.6759123826338456,
+        "reg_lambda": 0.4772478981932024,
+    }
+    print(best_params)

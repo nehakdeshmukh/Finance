@@ -285,3 +285,10 @@ print("Adj R2 :", adj_r2)
 y_pred = best_model.predict(X_test)
 n = X_test.shape[0]
 p = X_test.shape[1]
+
+
+mse = mean_squared_error(y_test, y_pred)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+adj_r2 = adjusted_r2_score(y_test, y_pred, n, p)

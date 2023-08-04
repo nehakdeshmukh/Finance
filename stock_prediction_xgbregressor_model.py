@@ -292,3 +292,11 @@ rmse = mean_squared_error(y_test, y_pred, squared=False)
 mae = mean_absolute_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 adj_r2 = adjusted_r2_score(y_test, y_pred, n, p)
+
+
+print("Metric Scores for Testing")
+print("MSE    :", mse)
+print("RMSE   :", rmse)
+print("MAE    :", mae)
+print("R2     :", r2)
+print("Adj R2 :", adj_r2)

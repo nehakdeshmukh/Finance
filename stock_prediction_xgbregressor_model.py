@@ -10,6 +10,7 @@ import pandas as pd
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import optuna
+import numpy as np
 
 
 df_technical = pd.read_csv(
@@ -280,3 +281,7 @@ print("RMSE   :", rmse)
 print("MAE    :", mae)
 print("R2     :", r2)
 print("Adj R2 :", adj_r2)
+
+y_pred = best_model.predict(X_test)
+n = X_test.shape[0]
+p = X_test.shape[1]

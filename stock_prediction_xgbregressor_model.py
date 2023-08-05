@@ -11,6 +11,8 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import optuna
 import numpy as np
+from plotly.subplot import 
+import plotly.graph_objects as go
 
 
 df_technical = pd.read_csv(
@@ -306,3 +308,61 @@ all_y_pred = np.concatenate((y_pred_train, y_pred))
 df_actual_predicted["predicted"] = all_y_pred
 df_actual_predicted_train = df_actual_predicted[df_actual_predicted["date"]<"2016-10-01"].reset_index(drop=True)
 df_actual_predicted_test = df_actual_predicted[df_actual_predicted["date"]>="2016-10-01"].reset_index(drop=True)
+
+
+print(df_actual_predicted)
+print(df_actual_predicted_train)
+print(df_actual_predicted_test)
+
+# Create Subplots
+fig = make_subplots(
+    rows=3, cols=2,
+    subplot_titles=["Apple: All Closing Prices", "Apple: Test Closing Prices", 
+                    "Intel: All Closing Prices", "Intel: Test Closing Prices",
+                    "Microsoft: All Closing Prices", "Microsoft: Test Closing Prices",
+                   ], 
+)
+
+# Line Plot
+for i in range(3):
+    df_symbol_all = df_actual_predicted[df_actual_predicted["symbol"]==top_tech_symbol[i]]
+    df_symbol_train = df_actual_predicted_train[df_actual_predicted_train["symbol"]==top_tech_symbol[i]]
+    df_symbol_test = df_actual_predicted_test[df_actual_predicted_test["symbol"]==top_tech_symbol[i]]
+    
+    mse_train = round(mean_squared_error(df_symbol_train["actual"], df_symbol_train["predicted"]), 2)
+    mse_test = round(mean_squared_error(df_symbol_test["actual"], df_symbol_test["predicted"]), 2)
+    
+    min_price = df_symbol_all["actual"].min()
+    max_price = df_symbol_all["actual"].max()
+    
+    # All Data
+    # Actual
+    fig.add_trace(
+        go.Scatter(
+            x=df_symbol_all["date"],
+            y=df_symbol_all["actual"],
+            mode="lines",
+            line=dict(
+                width=1,
+                color="#073b4c"
+            ),
+            name="Actual"
+        ), row=i+1, col=1
+    )
+    
+    # Train Predicted
+    fig.add_trace(
+        go.Scatter(
+            x=df_symbol_train["date"],
+            y=df_symbol_train["predicted"],
+            mode="lines",
+            line=dict(
+                width=1.5,
+                color="#ef476f"
+            ),
+            name="Train Predicted"
+        ), row=i+1, col=1
+    )
+
+# Show
+fig.show(renderer="iframe_connected")

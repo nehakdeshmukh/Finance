@@ -300,3 +300,9 @@ print("RMSE   :", rmse)
 print("MAE    :", mae)
 print("R2     :", r2)
 print("Adj R2 :", adj_r2)
+
+
+all_y_pred = np.concatenate((y_pred_train, y_pred))
+df_actual_predicted["predicted"] = all_y_pred
+df_actual_predicted_train = df_actual_predicted[df_actual_predicted["date"]<"2016-10-01"].reset_index(drop=True)
+df_actual_predicted_test = df_actual_predicted[df_actual_predicted["date"]>="2016-10-01"].reset_index(drop=True)

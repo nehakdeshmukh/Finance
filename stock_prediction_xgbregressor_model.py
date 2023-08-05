@@ -363,6 +363,77 @@ for i in range(3):
             name="Train Predicted"
         ), row=i+1, col=1
     )
+    
+    # Test Predicted
+        fig.add_trace(
+            go.Scatter(
+                x=df_symbol_test["date"],
+                y=df_symbol_test["predicted"],
+                mode="lines",
+                line=dict(
+                    width=1.5,
+                    color="#06d6a0"
+                ),
+                name="Test Predicted"
+            ), row=i+1, col=1
+        )
+        
+        # Annotation
+        fig.add_annotation(
+            x="2016-03-01", 
+            y=min_price + 0.1 * (max_price - min_price), 
+            xref="x{}".format(i*2+1), yref="y{}".format(i*2+1), xanchor="left",
+            text="<b>MSE Train: {}</b><br><b>MSE Test : {}</b>".format(mse_train, mse_test),
+            font=dict(
+                color="#073b4c",
+                size=12,
+            ),
+            showarrow=False
+        )
+        
+        # Test Data
+        # Actual
+        fig.add_trace(
+            go.Scatter(
+                x=df_symbol_test["date"],
+                y=df_symbol_test["actual"],
+                mode="lines",
+                line=dict(
+                    width=2,
+                    color="#073b4c"
+                ),
+                name="Actual"
+            ), row=i+1, col=2
+        )
+        
+        # Predicted
+        fig.add_trace(
+            go.Scatter(
+                x=df_symbol_test["date"],
+                y=df_symbol_test["predicted"],
+                mode="lines",
+                line=dict(
+                    width=1.5,
+                    color="#06d6a0"
+                ),
+                name="Predicted"
+            ), row=i+1, col=2
+        )
+        
+        # Update Axes
+        fig.update_xaxes(linecolor="Black", ticks="outside", row=i+1, col=1)
+        fig.update_xaxes(linecolor="Black", ticks="outside", row=i+1, col=2)
+        fig.update_yaxes(linecolor="Black", ticks="outside", row=i+1, col=1)
+        fig.update_yaxes(linecolor="Black", ticks="outside", row=i+1, col=2)
+    
+# Update Layout
+fig.update_layout(
+    title="<b>Closing Prices per Stock</b>", title_x=0.5, font_family="Garamond", font_size=14,
+    width=950, height=850,
+    showlegend=False,
+    plot_bgcolor="White",
+    paper_bgcolor="White"
+)
 
 # Show
 fig.show(renderer="iframe_connected")

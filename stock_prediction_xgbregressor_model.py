@@ -534,3 +534,11 @@ fig.update_layout(
 # Show
 fig.show(renderer="iframe_connected")
 
+# Feature Importance 
+
+# Create DataFrame
+df_importance = pd.DataFrame()
+df_importance["Features"] = X_train.columns
+df_importance["Importance"] = best_model.feature_importances_
+df_importance = df_importance.sort_values(by="Importance", ascending=False).reset_index(drop=True)[:20]
+df_importance = df_importance.sort_values(by="Importance", ascending=True).reset_index(drop=True)

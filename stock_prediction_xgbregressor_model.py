@@ -488,6 +488,48 @@ for i in range(3):
             name="Actual"
         ), row=i+1, col=1
     )
+    
+        
+    # Test
+    fig.add_trace(
+        go.Scatter(
+            x=df_symbol_test["actual"],
+            y=df_symbol_test["residual"],
+            mode="markers",
+            marker=dict(
+                color="#06d6a0",
+                size=6
+            ),
+            name="Residual"
+        ), row=i+1, col=2
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=[df_symbol_test["actual"].min(), df_symbol_test["actual"].max()],
+            y=[0.0, 0.0],
+            mode="lines",
+            line=dict(
+                color="#073b4c",
+                width=3
+            ),
+            name="Actual"
+        ), row=i+1, col=2
+    )
+    
+    # Update Axes
+    fig.update_xaxes(linecolor="Black", ticks="outside", row=i+1, col=1)
+    fig.update_xaxes(linecolor="Black", ticks="outside", row=i+1, col=2)
+    fig.update_yaxes(linecolor="Black", ticks="outside", row=i+1, col=1)
+    fig.update_yaxes(linecolor="Black", ticks="outside", row=i+1, col=2)
+
+# Update Layout
+fig.update_layout(
+    title="<b>Residual Plot</b>", title_x=0.5, font_family="Garamond", font_size=14,
+    width=950, height=850,
+    showlegend=False,
+    plot_bgcolor="White",
+    paper_bgcolor="White"
+)    
 
 # Show
 fig.show(renderer="iframe_connected")

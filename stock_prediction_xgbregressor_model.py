@@ -437,3 +437,58 @@ fig.update_layout(
 
 # Show
 fig.show(renderer="iframe_connected")
+
+
+
+#  Residual Plot 
+
+
+df_actual_predicted_train["residual"] = df_actual_predicted_train["actual"] - df_actual_predicted_train["predicted"]
+df_actual_predicted_test["residual"] = df_actual_predicted_test["actual"] - df_actual_predicted_test["predicted"]
+
+
+# Create Subplots
+fig = make_subplots(
+    rows=3, cols=2,
+    subplot_titles=["Apple: Train Residual", "Apple: Test Residual", 
+                    "Intel: Train Residual", "Intel: Test Residual",
+                    "Microsoft: Train Residual", "Microsoft: Test Residual",
+                   ], 
+)
+
+# Line Plot
+for i in range(3):
+    df_symbol_train = df_actual_predicted_train[df_actual_predicted_train["symbol"]==top_tech_symbol[i]]
+    df_symbol_test = df_actual_predicted_test[df_actual_predicted_test["symbol"]==top_tech_symbol[i]]
+    
+    # All Data
+    # Train
+    fig.add_trace(
+        go.Scatter(
+            x=df_symbol_train["actual"],
+            y=df_symbol_train["residual"],
+            mode="markers",
+            marker=dict(
+                color="#ef476f",
+                size=6
+            ),
+            name="Residual"
+        ), row=i+1, col=1
+    )
+    
+    fig.add_trace(
+        go.Scatter(
+            x=[df_symbol_train["actual"].min(), df_symbol_train["actual"].max()],
+            y=[0.0, 0.0],
+            mode="lines",
+            line=dict(
+                color="#073b4c",
+                width=3
+            ),
+            name="Actual"
+        ), row=i+1, col=1
+    )
+
+# Show
+fig.show(renderer="iframe_connected")
+

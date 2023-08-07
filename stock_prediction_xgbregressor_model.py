@@ -542,3 +542,22 @@ df_importance["Features"] = X_train.columns
 df_importance["Importance"] = best_model.feature_importances_
 df_importance = df_importance.sort_values(by="Importance", ascending=False).reset_index(drop=True)[:20]
 df_importance = df_importance.sort_values(by="Importance", ascending=True).reset_index(drop=True)
+
+
+# Create Figure
+fig = go.Figure()
+
+# Bar Plot
+fig.add_trace(
+    go.Bar(
+        x=df_importance["Importance"],
+        y=df_importance["Features"],
+        orientation="h",
+        name="Importance",
+        marker_color="#118ab2",
+        width=0.8
+    )
+)
+
+# Show
+fig.show(renderer="iframe_connected")

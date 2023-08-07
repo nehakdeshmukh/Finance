@@ -559,5 +559,18 @@ fig.add_trace(
     )
 )
 
+# Annotations
+for i in range(20):
+    fig.add_annotation(
+        x=df_importance["Importance"][i] + 0.003, y=df_importance["Features"][i], 
+        xref="x1", yref="y1", xanchor="left",
+        text="<b>{}</b>".format(df_importance["Features"][i]),
+        font=dict(
+            color="#118ab2",
+            size=12,
+        ),
+        showarrow=False
+    )
+
 # Show
 fig.show(renderer="iframe_connected")

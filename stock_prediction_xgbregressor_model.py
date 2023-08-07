@@ -572,5 +572,18 @@ for i in range(20):
         showarrow=False
     )
 
+# Update Axes
+fig.update_xaxes(showticklabels=False)
+fig.update_yaxes(showticklabels=False)
+
+# Update Layout
+fig.update_layout(
+    title="<b>Top 20 Feature Importance</b>", title_x=0.5,
+    font_family="Garamond", font_size=14,
+    width=950, height=900,
+    plot_bgcolor="White",
+    showlegend=False
+)
+
 # Show
 fig.show(renderer="iframe_connected")

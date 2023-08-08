@@ -11,7 +11,7 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import optuna
 import numpy as np
-from plotly.subplot import make_subplots
+from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
 

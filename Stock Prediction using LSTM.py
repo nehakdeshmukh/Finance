@@ -56,5 +56,31 @@ for i in range(60, len(train_data)):
         print(y_train)
         print()
         
+        
+x_train=np.array(x_train)
+y_train=np.array(y_train)
+
+
+# reshaped data for LSTM
+
+X_train_reshaped = np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
+
+
 # test_data = scaled_data[training_data_len - 60: , :]
 
+from keras.models import Sequential
+from keras.layers import LSTM,Dense
+
+model= Sequential()
+model.add(LSTM(128,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
+model.add(LSTM(64,return_sequences=False))
+model.add(Dense(25))
+model.add(Dense(1))
+
+
+# compile model
+
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+
+model.fit(X_train_reshaped,y_train,batch_size=1,epochs=5)

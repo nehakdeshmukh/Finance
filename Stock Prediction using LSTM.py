@@ -14,6 +14,7 @@ from datetime import datetime
 import plotly.graph_objects as go
 from plotly.offline import plot
 import numpy as np 
+from sklearn.preprocessing import MinMaxScaler
 
 yf.pdr_override()
 
@@ -31,5 +32,29 @@ plot(fig)
 
 data = df.loc[:,"Close"].values
 
+#training Data 95%
+training_data_len = int(np.ceil( len(data) * .95 ))
 
+data_reshaped = data.reshape(-1,1)
+
+# scaling Data 
+scaler = MinMaxScaler(feature_range=(0,1))
+scaled_data = scaler.fit_transform(data_reshaped)
+
+
+train_data = scaled_data[0:int(training_data_len), :]
+
+# Split the data into x_train and y_train data sets
+x_train = []
+y_train = []
+
+for i in range(60, len(train_data)):
+    x_train.append(train_data[i-60:i, 0])
+    y_train.append(train_data[i, 0])
+    if i<= 61:
+        print(x_train)
+        print(y_train)
+        print()
+        
+# test_data = scaled_data[training_data_len - 60: , :]
 

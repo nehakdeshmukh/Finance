@@ -112,3 +112,16 @@ predictions = scaler.inverse_transform(predictions)
 
 from sklearn.metrics import mean_squared_error
 rmse = np.sqrt(mean_squared_error(y_test, predictions))
+
+
+# plot for prediction  
+train = df[:training_data_len]
+validation = df[training_data_len:]
+validation['prediction']=predictions
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=train.index,y=df.loc[:,"Close"],name="train"))
+fig.add_trace(go.Scatter(x=validation.index,y=validation.loc[:,"Close"],name="validation"))
+fig.add_trace(go.Scatter(x=validation.index,y=validation["prediction"],name="predictions"))
+fig.update_layout(title="Close Price History of AAPL share",xaxis_title="Date",yaxis_title="Close Price USD")
+plot(fig)

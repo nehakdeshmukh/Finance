@@ -84,3 +84,23 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 
 
 model.fit(X_train_reshaped,y_train,batch_size=1,epochs=5)
+
+# Create Test Data 
+test_data = scaled_data[training_data_len - 60: , :]
+
+x_test=[]
+y_test = data[training_data_len::]
+
+
+# Create test data 
+for i in range(60, len(test_data)):
+    x_test.append(test_data[i-60:i, 0])
+    
+
+x_test=np.array(x_test)
+
+# reshape array 
+
+x_test_reshape = np.reshape(x_test,(x_test.shape[0],x_test.shape[1],1))
+
+

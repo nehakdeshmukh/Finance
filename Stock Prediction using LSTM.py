@@ -103,4 +103,12 @@ x_test=np.array(x_test)
 
 x_test_reshape = np.reshape(x_test,(x_test.shape[0],x_test.shape[1],1))
 
+# prediction 
 
+predictions = model.predict(x_test)
+predictions = scaler.inverse_transform(predictions)
+
+# model.evaluate(x_test,predictions)
+
+from sklearn.metrics import mean_squared_error
+rmse = np.sqrt(mean_squared_error(y_test, predictions))

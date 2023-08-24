@@ -72,9 +72,10 @@ from keras.models import Sequential
 from keras.layers import LSTM,Dense
 
 model= Sequential()
-model.add(LSTM(128,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
+model.add(LSTM(256,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
+model.add(LSTM(128,return_sequences=True))
 model.add(LSTM(64,return_sequences=False))
-model.add(Dense(25))
+model.add(Dense(50))
 model.add(Dense(1))
 
 
@@ -83,7 +84,7 @@ model.add(Dense(1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 
-model.fit(X_train_reshaped,y_train,batch_size=1,epochs=5)
+model.fit(X_train_reshaped,y_train,batch_size=10,epochs=5)
 
 # Create Test Data 
 test_data = scaled_data[training_data_len - 60: , :]
@@ -100,11 +101,9 @@ for i in range(60, len(test_data)):
 x_test=np.array(x_test)
 
 # reshape array 
-
 x_test_reshape = np.reshape(x_test,(x_test.shape[0],x_test.shape[1],1))
 
 # prediction 
-
 predictions = model.predict(x_test)
 predictions = scaler.inverse_transform(predictions)
 

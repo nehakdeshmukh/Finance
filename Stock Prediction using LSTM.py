@@ -73,7 +73,7 @@ from keras.layers import LSTM,Dense
 
 model= Sequential()
 model.add(LSTM(256,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
-model.add(LSTM(128,return_sequences=True))
+# model.add(LSTM(128,return_sequences=True))
 model.add(LSTM(64,return_sequences=False))
 model.add(Dense(50))
 model.add(Dense(1))

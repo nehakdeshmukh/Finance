@@ -69,13 +69,17 @@ X_train_reshaped = np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
 # test_data = scaled_data[training_data_len - 60: , :]
 
 from keras.models import Sequential
-from keras.layers import LSTM,Dense
+from keras.layers import LSTM,Dense,Dropout
 
 model= Sequential()
-model.add(LSTM(512,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
-model.add(LSTM(256,return_sequences=True))
+model.add(LSTM(256,return_sequences=True,input_shape=(X_train_reshaped.shape[1],1)))
+model.add(Dropout(0.2))
 model.add(LSTM(128,return_sequences=True))
-model.add(LSTM(64,return_sequences=False))
+model.add(Dropout(0.2))
+# model.add(LSTM(128,return_sequences=True))
+# model.add(Dropout(0.2))
+# model.add(LSTM(64,return_sequences=False))
+# model.add(Dropout(0.2))
 model.add(Dense(50))
 model.add(Dense(1))
 
